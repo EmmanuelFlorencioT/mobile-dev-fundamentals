@@ -1,3 +1,4 @@
+import 'package:complete_app/bottom_navbar.dart';
 import 'package:complete_app/new_user.dart';
 import 'package:complete_app/settings.dart';
 import 'package:complete_app/sliding_panel.dart';
@@ -57,6 +58,7 @@ class _HomeState extends State<Home> {
               DrawerItem(moduleName: 'See Map', moduleIndex: 2),
               DrawerItem(moduleName: 'Settings', moduleIndex: 3),
               DrawerItem(moduleName: 'Sliding Panel', moduleIndex: 4),
+              DrawerItem(moduleName: 'Bottom Navbar', moduleIndex: 5),
             ],
           ),
         ),
@@ -203,6 +205,10 @@ class DrawerItem extends StatelessWidget {
       case 4:
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => const MyPanel()));
+        break;
+      case 5:
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const BottomNavbar()));
         break;
       default:
         Navigator.pop(context);

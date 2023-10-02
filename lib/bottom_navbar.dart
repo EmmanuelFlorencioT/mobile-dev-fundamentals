@@ -1,19 +1,43 @@
-import 'package:complete_app/bottom_navbar.dart';
-import 'package:complete_app/map.dart';
+import 'package:flutter/material.dart';
+import 'package:complete_app/utils/constants.dart' as my_constants;
 import 'package:complete_app/new_user.dart';
 import 'package:complete_app/settings.dart';
 import 'package:complete_app/sliding_panel.dart';
-import 'package:flutter/material.dart';
-import 'package:complete_app/utils/constants.dart' as my_constants;
+import 'package:complete_app/about.dart';
+import 'package:complete_app/map.dart';
 
-class About extends StatefulWidget {
-  const About({super.key});
+class BottomNavbar extends StatefulWidget {
+  const BottomNavbar({super.key});
 
   @override
-  State<About> createState() => _AboutState();
+  State<BottomNavbar> createState() => _BottomNavbarState();
 }
 
-class _AboutState extends State<About> {
+class _BottomNavbarState extends State<BottomNavbar> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: School',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     //Check for the device size. To scale the height and width of the image.
@@ -23,7 +47,7 @@ class _AboutState extends State<About> {
       backgroundColor: my_constants.appPurple,
       appBar: AppBar(
         title: Text(
-          'About',
+          'Bottom Navbar',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: my_constants.appPurple,
@@ -46,6 +70,28 @@ class _AboutState extends State<About> {
         ),
         backgroundColor: my_constants.appPurple,
       ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIndex,
+        indicatorColor: my_constants.appYellow,
+        onDestinationSelected: _onItemTapped,
+        destinations: const <Widget>[
+          //Items within the Navbar
+          NavigationDestination(
+            selectedIcon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.business),
+            label: 'Business',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.school),
+            icon: Icon(Icons.school_outlined),
+            label: 'School',
+          ),
+        ],
+      ),
       body: Stack(
         children: [
           Container(
@@ -55,7 +101,12 @@ class _AboutState extends State<About> {
               borderRadius: BorderRadius.only(topRight: Radius.circular(120)),
               color: Colors.white,
             ),
-            child: Column(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _widgetOptions[_selectedIndex],
+              ],
+            ),
           )
         ],
       ),
@@ -76,6 +127,8 @@ class DrawerItem extends StatelessWidget {
             MaterialPageRoute(builder: (context) => const NewUser()));
         break;
       case 1:
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const About()));
         break;
       case 2:
         Navigator.of(context).pushReplacement(
@@ -90,8 +143,6 @@ class DrawerItem extends StatelessWidget {
             MaterialPageRoute(builder: (context) => const MyPanel()));
         break;
       case 5:
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const BottomNavbar()));
         break;
       default:
         Navigator.pop(context);
