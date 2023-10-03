@@ -6,6 +6,8 @@ import 'package:complete_app/sliding_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:complete_app/utils/constants.dart' as my_constants;
 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 class Map extends StatefulWidget {
   const Map({super.key});
 
@@ -14,6 +16,14 @@ class Map extends StatefulWidget {
 }
 
 class _MapState extends State<Map> {
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521523, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+
   @override
   Widget build(BuildContext context) {
     //Check for the device size. To scale the height and width of the image.
@@ -46,17 +56,28 @@ class _MapState extends State<Map> {
         ),
         backgroundColor: my_constants.appPurple,
       ),
+      // body: Stack(
+      //   children: [
+      //     Container(
+      //       width: size.width,
+      //       height: size.height - 56, //Minus the height of the appbar
+      //       decoration: const BoxDecoration(
+      //         borderRadius: BorderRadius.only(topRight: Radius.circular(120)),
+      //         color: Colors.white,
+      //       ),
+      //       child: Column(),
+      //     )
+      //   ],
+      // ),
       body: Stack(
         children: [
-          Container(
-            width: size.width,
-            height: size.height - 56, //Minus the height of the appbar
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(120)),
-              color: Colors.white,
+          GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: _center,
+              zoom: 11,
             ),
-            child: Column(),
-          )
+          ),
         ],
       ),
     );
