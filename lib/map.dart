@@ -3,6 +3,7 @@ import 'package:complete_app/bottom_navbar.dart';
 import 'package:complete_app/new_user.dart';
 import 'package:complete_app/settings.dart';
 import 'package:complete_app/sliding_panel.dart';
+import 'package:complete_app/utils/singleton.dart';
 import 'package:flutter/material.dart';
 import 'package:complete_app/utils/constants.dart' as my_constants;
 
@@ -16,12 +17,20 @@ class Map extends StatefulWidget {
 }
 
 class _MapState extends State<Map> {
+  Singleton singleton = Singleton();
+
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(45.521523, -122.677433);
+  late LatLng _center = const LatLng(45.521523, -122.677433);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+
+  @override
+  void initState() {
+    _center = LatLng(singleton.latitude, singleton.longitude);
+    super.initState();
   }
 
   @override
@@ -73,6 +82,8 @@ class _MapState extends State<Map> {
         children: [
           GoogleMap(
             onMapCreated: _onMapCreated,
+            myLocationButtonEnabled: true,
+            myLocationEnabled: true,
             initialCameraPosition: CameraPosition(
               target: _center,
               zoom: 11,

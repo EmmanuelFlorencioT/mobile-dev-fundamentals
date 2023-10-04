@@ -1,6 +1,9 @@
 import 'package:complete_app/home.dart';
+import 'package:complete_app/utils/singleton.dart';
+import 'package:complete_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:complete_app/utils/constants.dart' as my_constants;
+import 'package:geolocator/geolocator.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,6 +20,22 @@ class _LoginState extends State<Login> {
   bool _validateUser = false;
   bool _validateMail = false;
   bool _validatePassword = false;
+
+  @override
+  void initState() {
+    checkPosition();
+    super.initState(); //The parent is responsible of creating all the variables
+  }
+
+  Singleton singleton = Singleton();
+
+  void checkPosition() async {
+    //This function will be triggered once it has the response, since it is async
+    //There is a need to make it async since initState cannot wait to get a response because it is creating the view itself.
+    Position position = await Utils.determinePosition();
+    singleton.latitude = position.latitude;
+    singleton.longitude = position.longitude;
+  }
 
   @override
   Widget build(BuildContext context) {
