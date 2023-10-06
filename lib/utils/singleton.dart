@@ -18,6 +18,9 @@ class Singleton {
   String username = '';
   String email = '';
 
+  String username_action = '';
+  String email_action = '';
+
   //Examples of variables that MUST be Initialized
   String foo = '';
   String bar = "";

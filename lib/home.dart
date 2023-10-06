@@ -51,6 +51,7 @@ class _HomeState extends State<Home> {
         foregroundColor: my_constants.appYellow,
       ),
       endDrawer: Drawer(
+        backgroundColor: my_constants.appPurple,
         child: Container(
           padding: EdgeInsets.all(24),
           child: ListView(
@@ -92,15 +93,14 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-        backgroundColor: my_constants.appPurple,
       ),
       body: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                Card(
+                const Card(
                   color: my_constants.appYellow,
                   child: Padding(
                       padding: EdgeInsets.all(15),
@@ -127,7 +127,7 @@ class _HomeState extends State<Home> {
 
                         return Card(
                           child: Padding(
-                              padding: EdgeInsets.all(15),
+                              padding: const EdgeInsets.all(15),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -140,19 +140,35 @@ class _HomeState extends State<Home> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Icon(
-                                            Icons.edit,
-                                            color: my_constants.appYellow,
+                                          IconButton(
+                                            onPressed: () {
+                                              singleton.username_action =
+                                                  data[1];
+                                              singleton.email_action = data[2];
+                                              showEditAlert(context);
+                                            },
+                                            icon: const Icon(
+                                              Icons.edit,
+                                              color: my_constants.appYellow,
+                                            ),
                                           ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Icon(
-                                            Icons.delete,
-                                            color: Colors.red,
+                                          // const SizedBox(
+                                          //   width: 10,
+                                          // ),
+                                          IconButton(
+                                            onPressed: () {
+                                              singleton.username_action =
+                                                  data[1];
+                                              singleton.email_action = data[2];
+                                              showDeleteAlert(context);
+                                            },
+                                            icon: const Icon(
+                                              Icons.delete,
+                                              color: Colors.red,
+                                            ),
                                           ),
                                           IconButton(
-                                            icon: Icon(Icons.pin_drop),
+                                            icon: const Icon(Icons.pin_drop),
                                             color: Colors.blue,
                                             onPressed: () {
                                               setState(() {
@@ -175,22 +191,22 @@ class _HomeState extends State<Home> {
                       }),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 20),
+                  padding: const EdgeInsets.only(top: 20, bottom: 20),
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: ElevatedButton(
                       onPressed: () {
                         showAlertDialog(context);
                       },
-                      child: Text(
-                        'Alert',
-                        style: TextStyle(color: Colors.white),
-                      ),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: my_constants.appPurple,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50)),
                           fixedSize: Size(size.width * 0.75, 45)),
+                      child: const Text(
+                        'Alert',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 )
@@ -204,23 +220,118 @@ class _HomeState extends State<Home> {
 
   void showAlertDialog(BuildContext context) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('My first alert!'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [Text('This is my sample text'), Icon(Icons.warning)],
-            ),
-            actions: [
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('Close'))
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('My first alert!'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [Text('This is my sample text'), Icon(Icons.warning)],
+          ),
+          actions: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Close'))
+          ],
+        );
+      },
+    );
+  }
+
+  void showEditAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Do you want to edit this user?'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  const Text(
+                    'User: ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(singleton.username_action),
+                ],
+              ),
+              Row(
+                children: [
+                  const Text(
+                    'Email: ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(singleton.email_action),
+                ],
+              ),
             ],
-          );
-        });
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showDeleteAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Do you want to delete this user?'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  const Text(
+                    'User: ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(singleton.username_action),
+                ],
+              ),
+              Row(
+                children: [
+                  const Text(
+                    'Email: ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(singleton.email_action),
+                ],
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Close'),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: my_constants.appPurple,
+              ),
+              child: const Text(
+                'Delete',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
