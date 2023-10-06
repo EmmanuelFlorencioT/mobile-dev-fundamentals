@@ -1,5 +1,6 @@
 import 'package:complete_app/bottom_navbar.dart';
 import 'package:complete_app/sliding_panel.dart';
+import 'package:complete_app/utils/singleton.dart';
 import 'package:flutter/material.dart';
 import 'package:complete_app/settings.dart';
 import 'package:complete_app/about.dart';
@@ -14,6 +15,8 @@ class NewUser extends StatefulWidget {
 }
 
 class _NewUserState extends State<NewUser> {
+  Singleton singleton = Singleton();
+
   @override
   Widget build(BuildContext context) {
     //Check for the device size. To scale the height and width of the image.
@@ -35,6 +38,24 @@ class _NewUserState extends State<NewUser> {
           child: ListView(
             padding: EdgeInsets.all(30),
             children: [
+              ListTile(
+                title: Text(
+                  singleton.username,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25),
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  singleton.email,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w100,
+                      fontSize: 14),
+                ),
+              ),
               DrawerItem(moduleName: 'New User', moduleIndex: 0),
               DrawerItem(moduleName: 'About', moduleIndex: 1),
               DrawerItem(moduleName: 'See Map', moduleIndex: 2),

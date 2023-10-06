@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:complete_app/utils/constants.dart' as my_constants;
 import 'package:complete_app/about.dart';
 import 'package:complete_app/map.dart';
+import 'package:complete_app/utils/singleton.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -19,19 +20,21 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    users.add('0#name0#mail0');
-    users.add('1#name1#mail1');
-    users.add('2#name2#mail2');
-    users.add('3#name3#mail3');
-    users.add('4#name4#mail4');
-    users.add('5#name5#mail5');
-    users.add('6#name6#mail6');
-    users.add('7#name7#mail7');
-    users.add('8#name8#mail8');
-    users.add('9#name9#mail9');
+    users.add('0#name0#mail0#22.15654#-101.2548');
+    users.add('1#name1#mail1#24.15654#-124.2548');
+    users.add('2#name2#mail2#11.15654#-123.2548');
+    users.add('3#name3#mail3#25.15654#-122.2548');
+    users.add('4#name4#mail4#22.15654#-100.2548');
+    users.add('5#name5#mail5#55.15654#-99.2548');
+    users.add('6#name6#mail6#45.15654#-34.2548');
+    users.add('7#name7#mail7#44.15654#-120.2548');
+    users.add('8#name8#mail8#13.15654#-11.2548');
+    users.add('9#name9#mail9#99.15654#-30.2548');
 
     super.initState();
   }
+
+  Singleton singleton = Singleton();
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +56,33 @@ class _HomeState extends State<Home> {
           child: ListView(
             padding: EdgeInsets.all(30),
             children: [
+              Container(
+                child: ListTile(
+                  title: Text(
+                    singleton.username,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25),
+                  ),
+                ),
+                height: 30,
+              ),
+              Container(
+                child: ListTile(
+                  title: Text(
+                    singleton.email,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w100,
+                        fontSize: 14),
+                  ),
+                ),
+                height: 20,
+              ),
+              SizedBox(
+                height: 15,
+              ),
               DrawerItem(moduleName: 'New User', moduleIndex: 0),
               DrawerItem(moduleName: 'About', moduleIndex: 1),
               DrawerItem(moduleName: 'See Map', moduleIndex: 2),
@@ -76,10 +106,10 @@ class _HomeState extends State<Home> {
                       padding: EdgeInsets.all(15),
                       child: Row(
                         children: [
-                          Expanded(flex: 4, child: CardHeader(header: 'User')),
-                          Expanded(flex: 4, child: CardHeader(header: 'Mail')),
+                          Expanded(flex: 3, child: CardHeader(header: 'User')),
+                          Expanded(flex: 3, child: CardHeader(header: 'Mail')),
                           Expanded(
-                              flex: 4, child: CardHeader(header: 'Buttons'))
+                              flex: 5, child: CardHeader(header: 'Buttons'))
                         ],
                       )),
                 ),
@@ -101,11 +131,11 @@ class _HomeState extends State<Home> {
                               child: Row(
                                 children: [
                                   Expanded(
-                                      flex: 4, child: CardData(data: data[1])),
+                                      flex: 3, child: CardData(data: data[1])),
                                   Expanded(
-                                      flex: 4, child: CardData(data: data[2])),
+                                      flex: 3, child: CardData(data: data[2])),
                                   Expanded(
-                                      flex: 4,
+                                      flex: 5,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -120,7 +150,23 @@ class _HomeState extends State<Home> {
                                           Icon(
                                             Icons.delete,
                                             color: Colors.red,
-                                          )
+                                          ),
+                                          IconButton(
+                                            icon: Icon(Icons.pin_drop),
+                                            color: Colors.blue,
+                                            onPressed: () {
+                                              setState(() {
+                                                singleton.latitude_user =
+                                                    double.parse(data[3]);
+                                                singleton.longitude_user =
+                                                    double.parse(data[4]);
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Map()));
+                                              });
+                                            },
+                                          ),
                                         ],
                                       ))
                                 ],

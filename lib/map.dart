@@ -29,7 +29,13 @@ class _MapState extends State<Map> {
 
   @override
   void initState() {
-    _center = LatLng(singleton.latitude, singleton.longitude);
+    _center = LatLng(
+        singleton.latitude_user == 0.0
+            ? singleton.latitude
+            : singleton.latitude_user,
+        singleton.longitude_user == 0.0
+            ? singleton.longitude
+            : singleton.latitude_user);
     super.initState();
   }
 
@@ -54,6 +60,24 @@ class _MapState extends State<Map> {
           child: ListView(
             padding: EdgeInsets.all(30),
             children: [
+              ListTile(
+                title: Text(
+                  singleton.username,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25),
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  singleton.email,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w100,
+                      fontSize: 14),
+                ),
+              ),
               DrawerItem(moduleName: 'New User', moduleIndex: 0),
               DrawerItem(moduleName: 'About', moduleIndex: 1),
               DrawerItem(moduleName: 'See Map', moduleIndex: 2),

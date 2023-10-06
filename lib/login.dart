@@ -223,6 +223,10 @@ class _LoginState extends State<Login> {
                               _validatePassword = true;
                             }
 
+                            singleton.username = user
+                                .text; //Input controller passes to the singleton variable
+                            singleton.email = mail.text;
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

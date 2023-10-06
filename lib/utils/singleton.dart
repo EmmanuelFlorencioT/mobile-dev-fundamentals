@@ -12,6 +12,12 @@ class Singleton {
   double latitude = 0.0;
   double longitude = 0.0;
 
+  double latitude_user = 0.0;
+  double longitude_user = 0.0;
+
+  String username = '';
+  String email = '';
+
   //Examples of variables that MUST be Initialized
   String foo = '';
   String bar = "";
