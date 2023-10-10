@@ -72,9 +72,11 @@ class _NewUserState extends State<NewUser> {
           Container(
             width: size.width,
             height: size.height - 56, //Minus the height of the appbar
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.only(topRight: Radius.circular(120)),
-              color: Colors.white,
+              color: singleton.isDarkTheme
+                  ? my_constants.appDarkBg
+                  : my_constants.appLightBg,
             ),
             child: Column(),
           )

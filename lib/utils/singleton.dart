@@ -21,6 +21,8 @@ class Singleton {
   String username_action = '';
   String email_action = '';
 
+  bool isDarkTheme = true;
+
   //Examples of variables that MUST be Initialized
   String foo = '';
   String bar = "";

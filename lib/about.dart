@@ -33,6 +33,7 @@ class _AboutState extends State<About> {
         foregroundColor: my_constants.appYellow,
       ),
       endDrawer: Drawer(
+        backgroundColor: my_constants.appPurple,
         child: Container(
           padding: EdgeInsets.all(24),
           child: ListView(
@@ -74,18 +75,32 @@ class _AboutState extends State<About> {
             ],
           ),
         ),
-        backgroundColor: my_constants.appPurple,
       ),
       body: Stack(
         children: [
           Container(
             width: size.width,
             height: size.height - 56, //Minus the height of the appbar
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.only(topRight: Radius.circular(120)),
-              color: Colors.white,
+              color: singleton.isDarkTheme
+                  ? my_constants.appDarkBg
+                  : my_constants.appLightBg,
             ),
-            child: Column(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Information about the app...',
+                  style: TextStyle(
+                    color: singleton.isDarkTheme
+                        ? Colors.white
+                        : my_constants.appPurple,
+                  ),
+                )
+              ],
+            ),
           )
         ],
       ),

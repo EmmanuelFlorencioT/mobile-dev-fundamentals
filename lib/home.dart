@@ -96,121 +96,141 @@ class _HomeState extends State<Home> {
       ),
       body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                const Card(
-                  color: my_constants.appYellow,
-                  child: Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Row(
-                        children: [
-                          Expanded(flex: 3, child: CardHeader(header: 'User')),
-                          Expanded(flex: 3, child: CardHeader(header: 'Mail')),
-                          Expanded(
-                              flex: 5, child: CardHeader(header: 'Buttons'))
-                        ],
-                      )),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: users.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        var data = users[index].split('#');
-                        /*
-                          The data variable handle all the entries in the list:
-                          data[0] = id
-                          data[1] = userN
-                          data[2] = mailN
-                          */
+          Container(
+            color: singleton.isDarkTheme
+                ? my_constants.appDarkBg
+                : my_constants.appLightBg,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  const Card(
+                    color: my_constants.appYellow,
+                    child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Row(
+                          children: [
+                            Expanded(
+                                flex: 3, child: CardHeader(header: 'User')),
+                            Expanded(
+                                flex: 3, child: CardHeader(header: 'Mail')),
+                            Expanded(
+                                flex: 5, child: CardHeader(header: 'Buttons'))
+                          ],
+                        )),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: users.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          var data = users[index].split('#');
+                          /*
+                            The data variable handle all the entries in the list:
+                            data[0] = id
+                            data[1] = userN
+                            data[2] = mailN
+                            */
 
-                        return Card(
-                          child: Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      flex: 3, child: CardData(data: data[1])),
-                                  Expanded(
-                                      flex: 3, child: CardData(data: data[2])),
-                                  Expanded(
-                                      flex: 5,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          IconButton(
-                                            onPressed: () {
-                                              singleton.username_action =
-                                                  data[1];
-                                              singleton.email_action = data[2];
-                                              showEditAlert(context);
-                                            },
-                                            icon: const Icon(
-                                              Icons.edit,
-                                              color: my_constants.appYellow,
+                          return Card(
+                            color: singleton.isDarkTheme
+                                ? my_constants.appDarkListItem
+                                : my_constants.appLightListItem,
+                            child: Padding(
+                                padding: const EdgeInsets.all(15),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        flex: 3,
+                                        child: CardData(
+                                          data: data[1],
+                                          isDarkTheme: singleton.isDarkTheme,
+                                        )),
+                                    Expanded(
+                                        flex: 3,
+                                        child: CardData(
+                                          data: data[2],
+                                          isDarkTheme: singleton.isDarkTheme,
+                                        )),
+                                    Expanded(
+                                        flex: 5,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            IconButton(
+                                              onPressed: () {
+                                                singleton.username_action =
+                                                    data[1];
+                                                singleton.email_action =
+                                                    data[2];
+                                                showEditAlert(context);
+                                              },
+                                              icon: const Icon(
+                                                Icons.edit,
+                                                color: my_constants.appYellow,
+                                              ),
                                             ),
-                                          ),
-                                          // const SizedBox(
-                                          //   width: 10,
-                                          // ),
-                                          IconButton(
-                                            onPressed: () {
-                                              singleton.username_action =
-                                                  data[1];
-                                              singleton.email_action = data[2];
-                                              showDeleteAlert(context);
-                                            },
-                                            icon: const Icon(
-                                              Icons.delete,
-                                              color: Colors.red,
+                                            // const SizedBox(
+                                            //   width: 10,
+                                            // ),
+                                            IconButton(
+                                              onPressed: () {
+                                                singleton.username_action =
+                                                    data[1];
+                                                singleton.email_action =
+                                                    data[2];
+                                                showDeleteAlert(context);
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              ),
                                             ),
-                                          ),
-                                          IconButton(
-                                            icon: const Icon(Icons.pin_drop),
-                                            color: Colors.blue,
-                                            onPressed: () {
-                                              setState(() {
-                                                singleton.latitude_user =
-                                                    double.parse(data[3]);
-                                                singleton.longitude_user =
-                                                    double.parse(data[4]);
-                                                Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            Map()));
-                                              });
-                                            },
-                                          ),
-                                        ],
-                                      ))
-                                ],
-                              )),
-                        );
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 20),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        showAlertDialog(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: my_constants.appPurple,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50)),
-                          fixedSize: Size(size.width * 0.75, 45)),
-                      child: const Text(
-                        'Alert',
-                        style: TextStyle(color: Colors.white),
+                                            IconButton(
+                                              icon: const Icon(Icons.pin_drop),
+                                              color: Colors.blue,
+                                              onPressed: () {
+                                                setState(() {
+                                                  singleton.latitude_user =
+                                                      double.parse(data[3]);
+                                                  singleton.longitude_user =
+                                                      double.parse(data[4]);
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Map()));
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ))
+                                  ],
+                                )),
+                          );
+                        }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20, bottom: 20),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          showAlertDialog(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: my_constants.appPurple,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50)),
+                            fixedSize: Size(size.width * 0.75, 45)),
+                        child: const Text(
+                          'Alert',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ],
@@ -391,16 +411,19 @@ class DrawerItem extends StatelessWidget {
 
 class CardData extends StatelessWidget {
   final String data;
+  final bool isDarkTheme;
 
-  const CardData({super.key, required this.data});
+  const CardData({super.key, required this.data, required this.isDarkTheme});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       data,
       textAlign: TextAlign.center,
-      style: const TextStyle(
-          color: my_constants.appPurple,
+      style: TextStyle(
+          color: isDarkTheme
+              ? my_constants.appLightListItem
+              : my_constants.appPurple,
           fontSize: 15,
           fontWeight: FontWeight.bold),
     );
